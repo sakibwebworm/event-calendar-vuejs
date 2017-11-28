@@ -1,0 +1,247 @@
+body{
+    font-family: 'Roboto', sans-serif;
+}
+.event_app {
+    margin:7% 0% 7% 0%;
+}
+.before_calendar{
+    margin-bottom: 40px;
+}
+.first_row{
+    margin-bottom: 40px;
+}
+.month_name_and_year{
+    font-size: 18px;
+    font-weight: 800;
+}
+.add_event_button{
+
+}
+.month_name{
+    font-size: small;
+    font-weight: 800;
+    background: #EAEAEA;
+    border: none;
+    padding: 3px;
+}
+.small-button{
+    font-size: small;
+    background: #EAEAEA;
+    border: none;
+    font-weight: 600;
+    padding: 4px 8px 2px 8px;
+}
+.medium-button{
+    font-size: small;
+    font-weight: 800;
+    background: #EAEAEA;
+    border: none;
+}
+.month-navigator{
+    float: right;
+}
+.days{
+
+}
+.calendar{
+
+}
+.date_cell{
+    padding: 10px;
+}
+.date{
+    text-align: justify;
+}
+.date span{
+    padding: 4px;
+    background: gray;
+    border-radius: 12px;
+}
+/*form css*/
+.traingle{
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 20px 30px 20px;
+    border-color: transparent transparent #7c90a6 transparent;
+    border-style: inset;
+    -webkit-transform:rotate(360deg);
+}
+.form_element input,textarea{
+    width: 200px;
+    margin: 5px 0px;
+}
+.form_element textarea{
+    height: 54px;
+    margin: 5px 0px;
+}
+.form{
+    background: #D8D8D8;
+    width: 300px;
+    padding-left: 30px;
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+.form_buttons{
+    margin: 5px 0px;
+}
+.form_buttons button{
+    font-size: small;
+    font-weight: 800;
+    background: #50A9C4;
+    border: none;
+    width: 60px;
+}
+.gray_button{
+    background: #EAEAEA;
+}
+.absolute{
+    position: absolute;
+    left: 37px;
+    display:none
+}
+.position_relative{
+    position: relative;
+}
+.search_icon{
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: 400;
+    padding: 5px;
+    line-hight: 24px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0px 8px;
+    background: #D8D8D8;
+    width: 220px;
+}
+.overlay{
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+     top: 0;
+     left: 0;
+     right: 0;
+    bottom: 0;
+    background-color: white;
+}
+.calendar li:hover .overlay {
+    display:block;
+}
+.overlay a{
+    position: relative;
+    top: 34%;
+    padding: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+/*form css ends*/
+/*Search_result*/
+.search_result{
+    background: #E7E7E7;
+}
+.search_result_block{
+     overflow: hidden;
+    text-align: justify;
+    padding: 15px 10px;
+}
+.search_result_date{
+    width: 10%;
+    float: left;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-top: 14px;
+    padding: 0px 5px;
+    font-weight: 600;
+}
+.search_result_date h3{
+    font-size: small;
+    font-weight: 600;
+}
+.search_result_text p{
+    font-size: smaller;
+    font-weight: 100;
+}
+.search_result_text{
+    width: 75%;
+    float: left;
+    margin: 0px 10px;
+}
+.search_result_time{
+    margin-top: 23px;
+    font-weight: 800;
+}
+.selected_block{
+    background: #D7D7D7;
+}
+/*Search_result css ends*/
+.date_cell h4{
+    margin-top: 10px;
+    font-size: medium;
+    text-align: justify;
+}
+.date_cell p{
+    font-size: x-small;
+    text-align: justify;
+}
+.event_time{
+    text-align: justify;
+    font-size: x-large;
+}
+.event_more{
+    float: right;
+    color: green;
+}
+.days ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.days li {
+    display: inline-block;
+    width: 13.8%;
+    text-align: center;
+    font-weight: 600;
+}
+.calendar{
+
+}
+.calendar ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.calendar  li {
+    display: inline-block;
+    width: 13.8%;
+    text-align: center;
+    font-weight: 600;
+    background:#F0F0F0;
+    border:1px solid #DBDBDB;
+    position: relative;
+}
+/*Event day*/
+.event_day{
+    text-align:center;
+    font-size: 2.5em;
+    margin-bottom: 1em;
+
+}
+.events_list{
+    font-size: 2em;
+    font-weight: 500;
+    padding: 1em 0em;
+    overflow: hidden;
+    border-bottom: 1px solid #7c90a6;
+}
+.events_list h2{
+
+}
+.events_list h3{
+
+}
+.events_list a{
+
+}
+.events_align{text-align: center}
