@@ -63,7 +63,8 @@
           fullMonth:this.fullMonth,
           fullDate:this.fullDate,
           numericMonthAndYear:this.numericMonthAndYear,
-          index:index
+          index:index,
+          date:this.date
         }});
       },
       routeToCalendar(){

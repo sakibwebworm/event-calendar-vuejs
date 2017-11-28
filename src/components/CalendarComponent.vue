@@ -1,10 +1,8 @@
-
 <template>
   <div class="container">
     <div class="event_app">
       <!-- Before Calendar -->
       <div class="before_calendar">
-
         <div class="row first_row">
           <div class="col-lg-2 col-md-2 col-sm-2">
             <div class="month_name_and_year" v-model="headermonthsAndYear.yearName">
@@ -17,7 +15,6 @@
             </div>
             <div class="absolute" v-bind:class="{ active: isActive }">
               <div class="traingle">
-
               </div>
               <div class="form" @submit.prevent="addEvent">
                 <form>
@@ -49,7 +46,6 @@
                 </form>
               </div>
             </div>
-
           </div>
           <div class="col-lg-5 col-md-5 col-sm-5 position_relative">
             <div class="search">
@@ -57,7 +53,6 @@
             </div>
             <div class="absolute">
               <div class="traingle">
-
               </div>
               <div class="search_result">
                 <div class="search_result_block selected_block">
@@ -95,7 +90,6 @@
             </div>
           </div>
         </div>
-
         <div class="days">
           <ul>
             <li>Sun</li>
@@ -111,26 +105,26 @@
       <!-- Calendar -->
       <div class="calendar">
         <ul>
-          <li v-for="day in daysInMonth"> <div class="date_cell">
-            <div class="date" v-model="day.date">
-              <span>{{ day.date }}</span>
-            </div>
-            <div v-if="day.events.length>0">
-              <h4>
-                {{ day.events[0]["title"] }}
-              </h4>
-              <p v-if="day.events.length>0">{{ day.events[0]["description"]}}</p>
-              <div class="event_time">
-                14.50
+          <li v-for="day in daysInMonth">
+            <div class="date_cell">
+              <div class="date" v-model="day.date">
+                <span>{{ day.date }}</span>
               </div>
-              <div v-if="day.events.length>1" class="event_more">+{{ day.events.length }}</div>
+              <div v-if="day.events.length>0">
+                <h4>
+                  {{ day.events[0]["title"] }}
+                </h4>
+                <p v-if="day.events.length>0">{{ day.events[0]["description"]}}</p>
+                <div class="event_time" v-model="day.events.length>0">
+                  {{ day.events[0]["time"] }}
+                </div>
+                <div v-if="day.events.length>1" class="event_more">+{{ day.events.length-1 }}</div>
+              </div>
+              <div class="overlay">
+                <a href="#" @click="populateForm(day, $event)"><i class="fa fa-plus fa-3x" aria-hidden="true"></i></a>
+                <a href="#" v-if="day.events.length>0" @click="eventRoute(day, $event)"><i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i></a>
+              </div>
             </div>
-
-            <div class="overlay">
-              <a href="#" @click="populateForm(day, $event)"><i class="fa fa-plus fa-3x" aria-hidden="true"></i></a>
-              <a href="#" v-if="day.events.length>0" @click="eventRoute(day, $event)"><i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i></a>
-            </div>
-          </div>
           </li>
         </ul>
       </div>
@@ -167,7 +161,11 @@
       this.getDaysArrayByMonth();
     },
     methods:{
+      /*Array to crete dates from specific month and setting value to daysInMonth array*/
+      /*in every month view there will be 42 date cells,if the first day of the month
+  is not sunday then it will grab the last sunday of previous month*/
       getDaysArrayByMonth() {
+        //empty the daysInMonth array
         this.daysInMonth=[];
         var firstDay=moment().subtract(this.currentMonth, 'months').date(1).dayOfYear();
         var lastDay=moment().subtract(this.currentMonth, 'months').date(moment().daysInMonth()).dayOfYear();
@@ -176,29 +174,36 @@
         var LastcalendarDay=(lastDay+42)-(lastDay-sunday);
         var arrDays = [];
         var id=41;
+        //loop through to create the calendar
         while(LastcalendarDay!=sunday) {
           var current = moment().dayOfYear(LastcalendarDay);
-
           arrDays.push(this.setCalendarValue(current,id));
           id--;
           LastcalendarDay--;
         }
         this.daysInMonth=arrDays.reverse() ;
       },
+      //setting value for each day cell
       setCalendarValue(current,id){
         return {
           id:id,
           date:current.date(),
+          /*check if localstorage has events for specific date cell*/
           events:this.setEvents(id),
           fullDate:current.format("MM.DD.YYYY"),
-          time:moment().format("HH:mm")
+          time:moment().format("HH:mm"),
+          month:current.format("MMMM")
         }
       },
+      //changing of month through navigation thus changing the value of date cells
+      //according to month
       setCurrentMonth(value){
         this.currentMonth=this.currentMonth + value;
         this.setCurrentMonthAndYear();
         this.getDaysArrayByMonth();
       },
+      /*if localstorage has events for specific date cells return events
+      * else return empty array*/
       setEvents(id){
         var allEvents=JSON.parse(localStorage.getItem(this.headermonthsAndYear["monthAndYearValue"]));
         if(allEvents !==null){
@@ -208,34 +213,26 @@
           return [];
         }
       },
+      /*set yearname and monthname to show in header section and setnumeric value
+      * to set key in localstorage*/
       setCurrentMonthAndYear(){
-
         this.headermonthsAndYear={
           yearName: moment().subtract(this.currentMonth, 'months').format("MMMM YYYY"),
           monthName: moment().subtract(this.currentMonth, 'months').format("MMMM"),
           monthAndYearValue:moment().subtract(this.currentMonth, 'months').format("MMYYYY")
         };
       },
+      /*show Event form if it's open or close if it's open*/
       showFormOrhide(){
         (this.isActive)? this.isActive=false: this.isActive=true;
       },
+      /* filter through Datecells and return datecells with events*/
       grabEventsFromMonth(){
         return this.daysInMonth.filter(function(day){
           return day.events.length>0;
         });
       },
-      addEvent(){
-        this.daysInMonth[this.formAdd.id].events.push({
-          title: this.formAdd.title,
-          description: this.formAdd.description,
-          time: this.formAdd.formTime,
-          id: this.formAdd.id
-        });
-        this.showFormOrhide();
-        console.log(this.grabEventsFromMonth());
-        localStorage.setItem(this.headermonthsAndYear["monthAndYearValue"], JSON.stringify(this.daysInMonth));
-      }
-      ,
+      /*populate the event form and setting up properties need to be added in datecell*/
       populateForm(day,event){
         this.formAdd={
           id:day.id,
@@ -248,6 +245,19 @@
         }
         this.showFormOrhide();
       },
+      /* add event if eventform is submitted */
+      addEvent(){
+        this.daysInMonth[this.formAdd.id].events.push({
+          title: this.formAdd.title,
+          description: this.formAdd.description,
+          time: this.formAdd.formTime,
+          id: this.formAdd.id
+        });
+        this.showFormOrhide();
+        localStorage.setItem(this.headermonthsAndYear["monthAndYearValue"], JSON.stringify(this.daysInMonth));
+      }
+      ,
+      /*go to the edit page and setting the parameters*/
       eventRoute(day,event){
         this.$router.push({ name: 'Event', params: {
           events: day.events,
@@ -265,7 +275,6 @@
     }
   }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style >
   .fade-enter-active, .fade-leave-active {

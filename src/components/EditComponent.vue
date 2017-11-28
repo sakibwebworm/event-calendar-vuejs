@@ -5,8 +5,7 @@
         <div class="row first_row">
           <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="month_name_and_year event_day">
-              <button @click="routeToCalendar" class="pull-left">Go Back!</button>
-              <h2>October 31, 2017</h2>
+              <h2>{{date}}</h2>
             </div>
           </div>
         </div>
@@ -53,7 +52,8 @@
         fullMonth:this.$route.params.fullMonth,
         numericMonthAndYear:this.$route.params.numericMonthAndYear,
         fullDate:this.$route.params.fullDate,
-        index:this.$route.params.index
+        index:this.$route.params.index,
+        date:this.$route.params.date
       }
     },
     methods: {
