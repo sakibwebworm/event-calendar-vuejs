@@ -1,3 +1,4 @@
+
 <template>
   <div class="container">
     <div class="event_app">
@@ -127,7 +128,7 @@
 
             <div class="overlay">
               <a href="#" @click="populateForm(day, $event)"><i class="fa fa-plus fa-3x" aria-hidden="true"></i></a>
-              <a href="#" v-if="day.events.length>1" @click="eventRoute(day, $event)"><i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i></a>
+              <a href="#" v-if="day.events.length>0" @click="eventRoute(day, $event)"><i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i></a>
             </div>
           </div>
           </li>
@@ -219,9 +220,9 @@
         (this.isActive)? this.isActive=false: this.isActive=true;
       },
       grabEventsFromMonth(){
-       return this.daysInMonth.filter(function(day){
-         return day.events.length>0;
-       });
+        return this.daysInMonth.filter(function(day){
+          return day.events.length>0;
+        });
       },
       addEvent(){
         this.daysInMonth[this.formAdd.id].events.push({
@@ -242,7 +243,8 @@
           date:day.date,
           description:'',
           formDate:day.fullDate,
-          formTime:day.time
+          formTime:day.time,
+          fullDate:day.fullDate
         }
         this.showFormOrhide();
       },
