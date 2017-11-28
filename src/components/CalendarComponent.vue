@@ -127,7 +127,7 @@
 
             <div class="overlay">
               <a href="#" @click="populateForm(day, $event)"><i class="fa fa-plus fa-3x" aria-hidden="true"></i></a>
-              <a href="#" v-if="day.events.length>1"><i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i></a>
+              <a href="#" v-if="day.events.length>1" @click="eventRoute(day, $event)"><i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i></a>
             </div>
           </div>
           </li>
@@ -154,16 +154,16 @@
         },
         headermonthsAndYear:{
           yearName:'',
-          monthName:''
+          monthName:'',
+          monthAndYearvalue:''
         },
         isActive:false
 
       }
     },
     created(){
-      this.getDaysArrayByMonth();
       this.setCurrentMonthAndYear();
-      console.log(this.grabEventsFromMonth());
+      this.getDaysArrayByMonth();
     },
     methods:{
       getDaysArrayByMonth() {
@@ -181,7 +181,6 @@
           arrDays.push(this.setCalendarValue(current,id));
           id--;
           LastcalendarDay--;
-
         }
         this.daysInMonth=arrDays.reverse() ;
       },
@@ -189,19 +188,31 @@
         return {
           id:id,
           date:current.date(),
-          events:[],
+          events:this.setEvents(id),
           fullDate:current.format("MM.DD.YYYY"),
           time:moment().format("HH:mm")
         }
       },
       setCurrentMonth(value){
         this.currentMonth=this.currentMonth + value;
+        this.setCurrentMonthAndYear();
         this.getDaysArrayByMonth();
       },
+      setEvents(id){
+        var allEvents=JSON.parse(localStorage.getItem(this.headermonthsAndYear["monthAndYearValue"]));
+        if(allEvents !==null){
+          return allEvents[id]["events"];
+        }
+        else {
+          return [];
+        }
+      },
       setCurrentMonthAndYear(){
+
         this.headermonthsAndYear={
           yearName: moment().subtract(this.currentMonth, 'months').format("MMMM YYYY"),
-          monthName: moment().subtract(this.currentMonth, 'months').format("MMMM")
+          monthName: moment().subtract(this.currentMonth, 'months').format("MMMM"),
+          monthAndYearValue:moment().subtract(this.currentMonth, 'months').format("MMYYYY")
         };
       },
       showFormOrhide(){
@@ -220,7 +231,8 @@
           id: this.formAdd.id
         });
         this.showFormOrhide();
-        localStorage.setItem(moment().format("MMYYYY"), JSON.stringify(this.grabEventsFromMonth()));
+        console.log(this.grabEventsFromMonth());
+        localStorage.setItem(this.headermonthsAndYear["monthAndYearValue"], JSON.stringify(this.daysInMonth));
       }
       ,
       populateForm(day,event){
@@ -233,13 +245,22 @@
           formTime:day.time
         }
         this.showFormOrhide();
+      },
+      eventRoute(day,event){
+        this.$router.push({ name: 'Event', params: {
+          events: day.events,
+          date:day.fullDate,
+          fullMonth:this.daysInMonth,
+          numericDate:day.id,
+          numericMonthAndYear:this.headermonthsAndYear["monthAndYearValue"]
+        }})
       }
     },
     watch: {
       currentMonth: function () {
         this.setCurrentMonthAndYear();
       }
-    },
+    }
   }
 </script>
 

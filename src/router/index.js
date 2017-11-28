@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import CalendarComponent from '@/components/CalendarComponent'
+import EventComponent from '@/components/EventComponent'
 Vue.use(Router)
 
 export default new Router({
@@ -11,11 +11,11 @@ export default new Router({
       name: 'CalendarComponent',
       component: CalendarComponent
     },
-    /*{
-      path: '/allentry',
-      name: 'AllEntry',
-      component: AllEntry
-    },
+    {
+      path: '/events',
+      name: 'Event',
+      component: EventComponent,
+    }/*,
     {
       name: 'ShowEntry',
       path: '/entry/show/:id',
